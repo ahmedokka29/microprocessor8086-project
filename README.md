@@ -1,34 +1,38 @@
 # microprocessor8086-project
 ## Encryption & Decryption Algorithm
-firstly we got a key of 26 characters of the alphabet every character is present and no 
-character is rebeated we map from the original message with the key to the encrypted meesage 
-to optimize it we got a table of keys to choose randomly among them and inssert the number of 
-the key in the encrypted message so that no one will know the keys and save protected 
-Eg:
+This simple encryption program is made for the 8086 microprocessor. In the mono-numeric substitution encryption, each alphabetic letter is substituted by a number according to the following table:
 
-  | key |           message         | encrypted               |
-  |:---:|:-------------------------:|:-----------------------:|
-  |  c  |   abcdefghjklmnopqstruxyz | cbcdefghjklmnopqstruxyz |
-  |  d  |                           | cdcdefghjklmnopqstruxyz |
-  |  e  |                           | cdedefghjklmnopqstruxyz |
-  |  f  |                           | cdefefghjklmnopqstruxyz |
-  |  g  |                           | cdefgfghjklmnopqstruxyz |
-  |  m  |                           | cdefgmghjklmnopqstruxyz |
-  |  t  |                           | cdefgmthjklmnopqstruxyz |
-  |  u  |                           | cdefgmtujklmnopqstruxyz |
-  |  v  |                           | cdefgmtuwklmnopqstruxyz |
-  |  w  |                           | cdefgmtuwxlmnopqstruxyz |
-  |  x  |                           | cdefgmtuwxymnopqstruxyz |
-  |  y  |                           | cdefgmtuwxyznopqstruxyz |
-  |  z  |                           | cdefgmtuwxyzaopqstruxyz |
-  |  a  |                           | cdefgmtuwxyzabpqstruxyz |
-  |  b  |                           | cdefgmtuwxyzabhqstruxyz |
-  |  h  |                           | cdefgmtuwxyzabhistruxyz |
-  |  i  |                           | cdefgmtuwxyzabhiktruxyz |
-  |  j  |                           | cdefgmtuwxyzabhiklruxyz |
-  |  k  |                           | cdefgmtuwxyzabhikljuxyz |
-  |  l  |                           | cdefgmtuwxyzabhikljnxyz |
-  |  n  |                           | cdefgmtuwxyzabhikljnqyz |
-  |  o  |                           | cdefgmtuwxyzabhikljnqrz |
-  |  p  |                           | cdefgmtuwxyzabhikljnqrs |
+  | Plain Text |   Cipher Text    |
+  |:----------:|:----------------:|
+  |    a       |        1         | 
+  |    b       |        2         |
+  |    c       |        3         |
+  |    d       |        4         |
+  |    e       |        5         |
+  |    f       |        6         |
+  |    g       |        7         |
+  |    h       |        8         | 
+  |    i       |        9         |
+  |    j       |        10        | 
+  |    k       |        11        | 
+  |    l       |        12        | 
+  |    m       |        13        | 
+  |    n       |        14        |
+  |    o       |        15        |
+  |    p       |        16        |
+  |    q       |        17        | 
+  |    r       |        18        | 
+  |    s       |        19        |
+  |    t       |        20        |
+  |    u       |        21        |
+  |    v       |        22        |
+  |    w       |        23        |
+  |    x       |        24        |
+  |    y       |        25        |
+  |    z       |        26        |
+  
+  ## Steps
+   1- Constructing the table and storing it in the memory.
+   2- Writing a program to encrypt the input message.
+   3- Decrypting the cipher text to obtain the original text message.
  
