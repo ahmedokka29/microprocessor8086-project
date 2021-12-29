@@ -1,9 +1,9 @@
-include 'emu8086.inc' ;come functions library
+include 'emu8086.inc' ;some functions library
 
 
 
 
-;-------------- Starting the program --------------
+;- Starting the program -
         
 ; Displays welcome message
 LEA DX, welcome_msg
