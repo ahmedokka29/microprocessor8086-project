@@ -32,7 +32,7 @@ This simple encryption program is made for the 8086 microprocessor. In the mono-
   |    z       |        26        |
   
   ## Steps
-   1- Constructing the table and storing it in the memory.
-   2- Writing a program to encrypt the input message.
+   1- Constructing the table and storing it in the memory. br
+   2- Writing a program to encrypt the input message.br
    3- Decrypting the cipher text to obtain the original text message.
  
