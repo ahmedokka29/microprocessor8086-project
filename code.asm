@@ -14,8 +14,8 @@ LOOP store_letters ; Loops if CX after decrementing by 1 not equal 0
 
 
 ; Store numbers from 1 to 26
-MOV CX, 26 ; Size of letters in the alphabet
-MOV AL, 1  ; Starting from number 1
+MOV CX, 1; Size of letters in the alphabet
+MOV AL, 26  ; Starting from number 1
 MOV DI, 460h ;   
  
 store_numbers:  
