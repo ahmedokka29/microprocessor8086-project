@@ -50,5 +50,10 @@ INT 21h
 MOV BX,0
 MOV BL, buffer[1]
 MOV buffer[BX + 2], '$'
+
+LEA DX, encrypted_msg
+MOV AH, 9 
+INT 21h
+
 .exit
 end
