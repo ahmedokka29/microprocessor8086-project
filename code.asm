@@ -36,6 +36,22 @@ LEA DX, welcome_msg2
 MOV AH, 9 
 INT 21h
 
+start_program:
+
+; Displays "Enter a message to encrypt: " message
+LEA DX, encrypt_msg
+MOV AH, 9 
+INT 21h 
+
+; Takes input from user
+LEA DX, buffer
+mov AH, 0Ah ; Sub-function that stores input of a string to DS:DX
+INT 21h
+
+; Puts $ at the end to be able to print it later
+MOV BX,0
+MOV BL, buffer[1]
+MOV buffer[BX + 2], '$'
 
 
 
