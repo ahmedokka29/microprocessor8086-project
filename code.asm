@@ -1,8 +1,19 @@
-include 'emu8086.inc' ; Includes some common functions
+.model small
+.data
+welcome_msg db "Welcome to Encryption and Decryption Platform $"
+welcome_msg2 db 0Dh,0Ah, "====================================================== $"
+encrypt_msg db 0Dh,0Ah, "Enter a message to encrypt: $"
+buffer db 27,?, 27 dup(' ')
+.code
+.startup    
+LEA DX, welcome_msg
+MOV AH, 9 
+INT 21h 
+    
+LEA DX, welcome_msg2
+MOV AH, 9 
+INT 21h
 
-;-------------- Saving Tables --------------
-                                                     
-; Stores letters from a to z (lower case) 
 MOV CX, 26   ; Size of letters in the alphabet
 MOV AL, 61h  ; ASCII code for letter 'a'
 MOV DI, 400h ; Hold the offset of memory location in the ES  
@@ -21,20 +32,7 @@ MOV DI, 460h ;
 store_numbers:  
 STOSB   
 INC AL  
-LOOP store_numbers
-
-
-;-------------- Starting the program --------------        
-        
-; Displays welcome message
-LEA DX, welcome_msg
-MOV AH, 9 
-INT 21h 
-    
-
-LEA DX, welcome_msg2
-MOV AH, 9 
-INT 21h
+LOOP store_numbers   
 
 start_program:
 
@@ -52,13 +50,5 @@ INT 21h
 MOV BX,0
 MOV BL, buffer[1]
 MOV buffer[BX + 2], '$'
-
-
-
-
-welcome_msg db "Welcome to Encryption and Decryption Platform $"
-welcome_msg2 db 0Dh,0Ah, "====================================================== $"
-
-
-
+.exit
 end
