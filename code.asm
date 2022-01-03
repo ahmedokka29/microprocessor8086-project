@@ -1,10 +1,25 @@
 .MODEL SMALL
 .STACK
 .DATA
+
 number DB 0
 numberplace db 10
-     ENTER PROC NEAR ;Entering a multi digit number
-        mov number,0 
+
+messageinvalidcharacter db 0ah,0dh,"Invalid Character$"
+messageinputnumber db 0ah,0dh,"Please Input a number $"
+
+
+.CODE
+.STARTUP
+
+    ENTER PROC NEAR
+    
+        loop_number_main:
+        mov ah,09h  
+        mov dx,offset messageinputnumber    
+        int 21h     
+        
+        mov number,0    
     loop_read_number:
     
         mov ah,01h  
@@ -13,6 +28,13 @@ numberplace db 10
         
         cmp al,0dh 
         je numbercomplete   
+        
+        cmp al,30h  
+                    
+        jl invalidcharacter 
+     
+        cmp al,39h  
+        jg invalidcharacter 
         
         
         sub al,30h  
@@ -30,11 +52,23 @@ numberplace db 10
         jmp loop_read_number
     
     
-         
+invalidcharacter:
+    mov ah,09h  
+    mov dx,offset messageinvalidcharacter   
+    int 21h     
+
+    jmp loop_number_main           
         
 numbercomplete:
-mov al,number
-RET
+ 
+    
+    mov al,number 
+
+
+
+
+    RET
 ENTER ENDP
-    .exit
-    end
+P_END:
+.EXIT
+END
