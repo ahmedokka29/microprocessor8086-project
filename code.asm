@@ -3,8 +3,8 @@
 .DATA
 number DB 0
 numberplace db 10
-     ENTER PROC NEAR
-        mov number,0    
+     ENTER PROC NEAR ;Entering a multi digit number
+        mov number,0 
     loop_read_number:
     
         mov ah,01h  
