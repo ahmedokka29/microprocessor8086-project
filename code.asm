@@ -1,59 +1,40 @@
-.model small
-.data
-welcome_msg db "Welcome to Encryption and Decryption Platform $"
-welcome_msg2 db 0Dh,0Ah, "====================================================== $"
-encrypt_msg db 0Dh,0Ah, "Enter a message to encrypt: $"
-buffer db 27,?, 27 dup(' ')
-.code
-.startup    
-LEA DX, welcome_msg
-MOV AH, 9 
-INT 21h 
+.MODEL SMALL
+.STACK
+.DATA
+number DB 0
+numberplace db 10
+     ENTER PROC NEAR
+        mov number,0    
+    loop_read_number:
     
-LEA DX, welcome_msg2
-MOV AH, 9 
-INT 21h
-
-MOV CX, 26   ; Size of letters in the alphabet
-MOV AL, 61h  ; ASCII code for letter 'a'
-MOV DI, 400h ; Hold the offset of memory location in the ES  
-CLD ; DF = 0 
-store_letters:  
-STOSB ; Copies a byte from AL to a memory location in ES. DI is used to hold the offset of the memory location in the ES. After the copy, DI is automatically incremented or decremented to point to the next string element in memory.   
-INC AL ; Increases AL value by 1, therefore changing the letter 
-LOOP store_letters ; Loops if CX after decrementing by 1 not equal 0
-
-
-; Store numbers from 1 to 26
-MOV CX, 26; Size of letters in the alphabet
-MOV AL, 1  ; Starting from number 1
-MOV DI, 460h ;   
- 
-store_numbers:  
-STOSB   
-INC AL  
-LOOP store_numbers   
-
-start_program:
-
-; Displays "Enter a message to encrypt: " message
-LEA DX, encrypt_msg
-MOV AH, 9 
-INT 21h 
-
-; Takes input from user
-LEA DX, buffer
-mov AH, 0Ah ; Sub-function that stores input of a string to DS:DX
-INT 21h
-
-; Puts $ at the end to be able to print it later
-MOV BX,0
-MOV BL, buffer[1]
-MOV buffer[BX + 2], '$'
-
-LEA DX, encrypted_msg
-MOV AH, 9 
-INT 21h
-
-.exit
-end
+        mov ah,01h  
+                    
+        int 21h    
+        
+        cmp al,0dh 
+        je numbercomplete   
+        
+        
+        sub al,30h  
+                                
+        mov bl,al   
+        
+        mov al,number   
+        mul numberplace  
+                        
+        
+        add al,bl       
+        mov number,al
+        
+       
+        jmp loop_read_number
+    
+    
+         
+        
+numbercomplete:
+mov al,number
+RET
+ENTER ENDP
+    .exit
+    end
