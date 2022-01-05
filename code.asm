@@ -18,7 +18,7 @@ MOV AX,@DATA
 MOV DS,AX
 MOV number,0 
  
-CALL ENTER ;taking an input
+CALL ENTER ;calling function to take an input
 
 ;start of binary search
 MOV BL,AL    
@@ -59,6 +59,8 @@ INT 21H
 MOV AH,4CH  
 JMP P_END
 ;end of binary search
+
+;function for taking input
     ENTER PROC NEAR
     
         loop_number_main:
@@ -109,6 +111,7 @@ numbercomplete:
 
     RET
 ENTER ENDP
+
 P_END:
 .EXIT
 END
