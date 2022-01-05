@@ -8,7 +8,7 @@ numberplace db 10
 KEY EQU 0DH
 ;Messages defenitions
 MSG1 DB "KEY IS FOUND AT POSITION $" 
-MSG2 DB "KEY NOT FOUND!!!!!!!!!!!!!. $"
+MSG2 DB "KEY NOT FOUND!!! $"
 MSG3 DB "ENTER SIZE: $"   
 MSG4 DB "ENTER ELEMENT NUMBER  $"
 MSG5 DB "____ $"
