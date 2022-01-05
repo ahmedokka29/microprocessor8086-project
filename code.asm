@@ -16,9 +16,11 @@ messageinputnumber db 0ah,0dh,"Please Input a number $"
 .STARTUP
 MOV AX,@DATA
 MOV DS,AX
-MOV number,0
+MOV number,0 
  
-CALL ENTER
+CALL ENTER ;taking an input
+
+;start of binary search
 MOV BL,AL    
 
 MOV BH,00
@@ -56,6 +58,7 @@ DISP:MOV AH,09H
 INT 21H
 MOV AH,4CH  
 JMP P_END
+;end of binary search
     ENTER PROC NEAR
     
         loop_number_main:
