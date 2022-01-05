@@ -45,9 +45,6 @@ CMP CL,SIZE
 JE ARR_END 
 
 
-
- 
-
 LEA DX,MSG4
 MOV AH,09H
 INT 21H
@@ -81,9 +78,7 @@ JMP ARR_LOOP
     JMP ARR_LOOP
 ARR_END:
 ;array elements end
-
-                   
-                   
+                 
 
 MOV BL,SIZE
 DEC BL    
@@ -129,11 +124,6 @@ INT 21H
 
   
 JMP P_END
-
-
-
-
-
 
 
     ENTER PROC NEAR
@@ -203,9 +193,7 @@ numbercomplete:
     mov al,number 
     
     RET
-ENTER ENDP  
-    
-    
+ENTER ENDP     
     
     
 PRINT PROC          
@@ -268,8 +256,6 @@ ret
 PRINT ENDP
     
 
-
-
 NEWLINE PROC
   push ax
   push dx
@@ -283,16 +269,7 @@ NEWLINE PROC
   pop ax   
 ret 
 NEWLINE ENDP
-    
-
-
-
-
-
-
-
-
-    
+        
     
 P_END:
 .EXIT
