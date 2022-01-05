@@ -6,7 +6,8 @@ number DB 0
 SOLVE DB 0
 numberplace db 10
 KEY EQU 0DH
-MSG1 DB "KEY IS FOUND AT POSITION $"
+;Messages defenitions
+MSG1 DB "KEY IS FOUND AT POSITION $" 
 MSG2 DB "KEY NOT FOUND!!!!!!!!!!!!!. $"
 MSG3 DB "ENTER SIZE: $"   
 MSG4 DB "ENTER ELEMENT NUMBER  $"
