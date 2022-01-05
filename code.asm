@@ -10,16 +10,20 @@ MSG1 DB "KEY IS FOUND AT POSITION $"
 MSG2 DB "KEY NOT FOUND!!!!!!!!!!!!!. $"
 MSG3 DB "ENTER SIZE: $"   
 MSG4 DB "ENTER ELEMENT NUMBER  $"
-MSG5 DB "ENTER ELEMENTS SEPARATED BY SPACE $"
-SIZE DB 0
-messageinvalidcharacter db 0ah,0dh,"Invalid Character$"
-messageinputnumber db 0ah,0dh,"Please Input a number $"
+MSG5 DB "____ $"
+MSG6 DB "OVERFLOW $"  
+MSG7 DB "NOTSORTED ENTER AGAIN $"
+INDEX DB 0
+SIZE DB 0   
+messageinvalidcharacter db "Invalid Character$"
+messageinputnumber db "Please Input a number $"
 
 
 .CODE
 .STARTUP    
 MOV AX,@DATA
 MOV DS,AX
+STR:
 MOV number,0
 LEA DX,MSG3
 MOV AH,09H
@@ -43,7 +47,6 @@ JE ARR_END
 
  
 
-
 LEA DX,MSG4
 MOV AH,09H
 INT 21H
@@ -51,17 +54,30 @@ INT 21H
 MOV AL,CL
 INC AL
 MOV AH,0
-Call print
-MOV AH,4CH
+CALL PRINT
+LEA DX,MSG5
+MOV AH,09H
+INT 21H
 
 
-CALL ENTER
-
+CALL ENTER 
+CALL NEWLINE
+CMP AL,INDEX
+JL NOTSORTED
+MOV INDEX,AL
+ 
 MOV CH,0
 MOV SI,CX
 MOV ARR[SI],AL
 INC CL
 JMP ARR_LOOP
+    
+    
+    NOTSORTED:
+    LEA DX,MSG7
+    MOV AH,09H
+    INT 21H
+    JMP ARR_LOOP
 ARR_END:
 ;array elements end
 
@@ -107,9 +123,18 @@ CALL PRINT
 JMP P_END
 
 FAIL:LEA DX,MSG2
+MOV AH,09H
+INT 21H
 
   
 JMP P_END
+
+
+
+
+
+
+
     ENTER PROC NEAR
         PUSH AX
         PUSH BX
@@ -140,14 +165,27 @@ JMP P_END
         
         mov al,number   
         mul numberplace  
-                        
-        
-        add al,bl       
+             
+        mov bh,0       
+        mov ah,0
+        add ax,bx
+        cmp ah,0
+        jne overflow
+ 
+          
+
         mov number,al
         
        
         jmp loop_read_number
-    
+
+
+overflow:
+    lea dx, msg6
+    mov ah,09h  
+       
+    int 21h
+    jmp P_END
     
 invalidcharacter:
     mov ah,09h  
@@ -228,6 +266,31 @@ exit:
 ret
 PRINT ENDP
     
+
+
+
+NEWLINE PROC
+  push ax
+  push dx
+  mov dx,13
+  mov ah,2
+  int 21h  
+  mov dx,10
+  mov ah,2
+  int 21h  
+  pop dx
+  pop ax   
+ret 
+NEWLINE ENDP
+    
+
+
+
+
+
+
+
+
     
     
 P_END:
