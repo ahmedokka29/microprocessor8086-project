@@ -1,11 +1,11 @@
 .MODEL SMALL
 .STACK
 .DATA
-ARR DB 127 DUP(?);define array with maximmum size 127 
+ARR DB 127 DUP(?)                                          ;define array with maximmum size 127 
 number DB 0
 SOLVE DB 0
 numberplace db 10
-KEY DB 0DH;the input key
+KEY DB 0DH                                                 ;the input key
 ;Messages defenitions
 MSG1 DB "KEY IS FOUND AT POSITION $" 
 MSG2 DB "KEY NOT FOUND!!! $"
@@ -23,16 +23,16 @@ messageinputnumber db "Please Input a number $"
 
 .CODE
 .STARTUP    
-MOV AX,@DATA ;intialize the data segement
+MOV AX,@DATA                                                ;intialize the data segement
 MOV DS,AX
 STR:
 MOV number,0
 ; display welcome messege
-LEA DX,MSG3 ;load the effective address of msg3 to dx
+LEA DX,MSG3                                                 ;load the effective address of msg3 to dx
 MOV AH,09H
-INT 21H ;fetch the instruction in 21h addrees
+INT 21H                                                     ;fetch the instruction in 21h addrees
 
-CALL ENTER ; call function to enter the size
+CALL ENTER                                                  ; call function to enter the size
 MOV SIZE,AL
 
 
@@ -43,53 +43,53 @@ MOV CL,0
 ;array elements begin
 ARR_LOOP: 
 
-CMP CL,SIZE ; compare the size with CL
+CMP CL,SIZE                                                ; compare the size with CL
 JE ARR_END 
 
 
 LEA DX,MSG4
 MOV AH,09H
-INT 21H ;fetch the instruction in 21h addrees
+INT 21H                                                    ;fetch the instruction in 21h addrees
 
-MOV AL,CL ;mov cl to al 
-INC AL ;increment AL by 1
-MOV AH,0 ; ah=0
-CALL PRINT ;call the print proc
-LEA DX,MSG5 ; 
+MOV AL,CL                                                  ;mov cl to al 
+INC AL                                                     ;increment AL by 1
+MOV AH,0                                                   ; ah=0
+CALL PRINT                                                 ;call the print proc
+LEA DX,MSG5                                                ; load effective address of msg5 to dx
 MOV AH,09H
 INT 21H
 
 
-CALL ENTER ;call it to enter the elements of the arr
-CALL NEWLINE ;call the new line proc
-CMP AL,INDEX ;compare the new intered element with the previos one
-JL NOTSORTED ; if the new element is less than the old it prints nonsorted and make u enter it again
-MOV INDEX,AL ;after entering the new element it keeps its vvalue INDEX
+CALL ENTER                                                 ;call it to enter the elements of the arr
+CALL NEWLINE                                               ;call the new line proc
+CMP AL,INDEX                                               ;compare the new intered element with the previos one
+JL NOTSORTED                                               ; if the new element is less than the old it prints nonsorted and make u enter it again
+MOV INDEX,AL                                               ;after entering the new element it keeps its vvalue INDEX
  
 MOV CH,0
 MOV SI,CX 
 MOV ARR[SI],AL
-INC CL ;increament the counter of the loop
+INC CL                                                     ;increament the counter of the loop
 JMP ARR_LOOP
     
     
     NOTSORTED:
-    LEA DX,MSG7 ; load effective address to the dx
+    LEA DX,MSG7                                            ; load effective address to the dx
     MOV AH,09H
-    INT 21H ; fetch the instruction in 21h
-    CALL NEWLINE ;print brake line
-    JMP ARR_LOOP ;contiue the loop
+    INT 21H                                                ; fetch the instruction in 21h
+    CALL NEWLINE                                           ;print brake line
+    JMP ARR_LOOP                                           ;contiue the loop
 ARR_END:
-LEA DX,MSG8 ; load effective address to the dx
+LEA DX,MSG8                                                ; load effective address to the dx
 MOV AH,09H
-INT 21H
+INT 21H                                                    ; fetch the instruction in 21h
 CALL ENTER 
-CALL NEWLINE
-MOV KEY,AL
+CALL NEWLINE                                               ;print brake line
+MOV KEY,AL                                                 ;put the key that eners in al to key
 ;array elements end
          
  
-MOV BL,SIZE
+MOV BL,SIZE                                                 ;mov the size of the array to bl
 DEC BL    
 
 MOV BH,00
