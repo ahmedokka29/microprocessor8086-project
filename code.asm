@@ -76,15 +76,18 @@ JMP ARR_LOOP
     LEA DX,MSG7
     MOV AH,09H
     INT 21H
+    CALL NEWLINE
     JMP ARR_LOOP
 ARR_END:
 LEA DX,MSG8
 MOV AH,09H
 INT 21H
-CALL ENTER
+CALL ENTER 
+CALL NEWLINE
 MOV KEY,AL
 ;array elements end
-
+         
+ 
 MOV BL,SIZE
 DEC BL    
 
@@ -110,7 +113,7 @@ BIG:JE SUCCESS
 INC AL
 MOV BH,AL
 JMP AGAIN
-
+    
 SUCCESS:
 MOV SOLVE,AL
 LEA DX,MSG1
@@ -137,7 +140,7 @@ JMP P_END
         PUSH DX
         loop_number_main:
         
-        MOV NUMBER,0    
+        MOV number,0    
     loop_read_number:
     
         MOV AH,01H  
@@ -159,7 +162,7 @@ JMP P_END
                                 
         MOV BL,AL   
         
-        MOV AL,number   
+        MOV AL,number  
         MUL numberplace  
              
         MOV BH,0       
@@ -171,6 +174,8 @@ JMP P_END
           
 
         MOV number,AL
+        CMP number,0
+        JL overflow
         
        
         JMP loop_read_number
@@ -198,7 +203,8 @@ numbercomplete:
     mov al,number 
     
     RET
-ENTER ENDP
+ENTER ENDP     
+    
     
 PRINT PROC          
      
@@ -273,7 +279,8 @@ NEWLINE PROC ; printing the newline
   POP AX   
 RET 
 NEWLINE ENDP
-
+        
+    
 P_END: ; end of the program
 .EXIT
 END
