@@ -111,7 +111,94 @@ INC AL
 MOV BH,AL
 JMP AGAIN
 
+SUCCESS:
+MOV SOLVE,AL
+LEA DX,MSG1
+MOV AH,09H
+INT 21H
+MOV AL,SOLVE 
+INC AL
+MOV AH,0 
+CALL PRINT
 
+JMP P_END
+
+FAIL:LEA DX,MSG2
+MOV AH,09H
+INT 21H
+
+  
+JMP P_END
+
+
+    ENTER PROC NEAR
+        PUSH AX
+        PUSH BX
+        PUSH DX
+        loop_number_main:
+        
+        MOV NUMBER,0    
+    loop_read_number:
+    
+        MOV AH,01H  
+                    
+        INT 21H    
+        
+        CMP AL,0DH 
+        JE numbercomplete   
+        
+        CMP AL,30H  
+                    
+        JL invalidcharacter 
+     
+        CMP AL,39h  
+        JG invalidcharacter 
+        
+        
+        SUB AL,30h  
+                                
+        MOV BL,AL   
+        
+        MOV AL,number   
+        MUL numberplace  
+             
+        MOV BH,0       
+        MOV AH,0
+        ADD AX,BX
+        CMP AH,0
+        JNE overflow
+ 
+          
+
+        MOV number,AL
+        
+       
+        JMP loop_read_number
+
+
+overflow:
+    LEA DX, msg6
+    MOV AH,09H  
+       
+    INT 21h
+    JMP P_END
+    
+invalidcharacter:
+    MOV AH,09h  
+    MOV DX,offset messageinvalidcharacter   
+    INT 21h     
+
+    JMP loop_number_main           
+        
+numbercomplete:
+ 
+    POP DX
+    POP BX
+    POP AX
+    mov al,number 
+    
+    RET
+ENTER ENDP
     
 P_END: ; end of the program
 .EXIT
