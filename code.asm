@@ -1,11 +1,11 @@
 .MODEL SMALL
 .STACK
 .DATA
-ARR DB 255 DUP(?);define array with maximmum size 255 
+ARR DB 127 DUP(?);define array with maximmum size 127 
 number DB 0
 SOLVE DB 0
 numberplace db 10
-KEY EQU 0DH;the input key
+KEY DB 0DH;the input key
 ;Messages defenitions
 MSG1 DB "KEY IS FOUND AT POSITION $" 
 MSG2 DB "KEY NOT FOUND!!! $"
@@ -20,9 +20,72 @@ SIZE DB 0
 messageinvalidcharacter db "Invalid Character$"
 messageinputnumber db "Please Input a number $"
 
+
 .CODE
 .STARTUP    
-      
+MOV AX,@DATA ;intialize the data segement
+MOV DS,AX
+STR:
+MOV number,0
+LEA DX,MSG3 ; display welcome messege
+MOV AH,09H
+INT 21H ;fetch the instruction in 21h addrees
+
+CALL ENTER ; call function to inter the size
+MOV SIZE,AL
+
+
+MOV CL,0 
+
+
+
+;array elements begin
+ARR_LOOP: 
+
+CMP CL,SIZE
+JE ARR_END 
+
+
+LEA DX,MSG4
+MOV AH,09H
+INT 21H
+
+MOV AL,CL
+INC AL
+MOV AH,0
+CALL PRINT
+LEA DX,MSG5
+MOV AH,09H
+INT 21H
+
+
+CALL ENTER 
+CALL NEWLINE
+CMP AL,INDEX
+JL NOTSORTED
+MOV INDEX,AL
+ 
+MOV CH,0
+MOV SI,CX
+MOV ARR[SI],AL
+INC CL
+JMP ARR_LOOP
+    
+    
+    NOTSORTED:
+    LEA DX,MSG7
+    MOV AH,09H
+    INT 21H
+    JMP ARR_LOOP
+ARR_END:
+LEA DX,MSG8
+MOV AH,09H
+INT 21H
+CALL ENTER
+MOV KEY,AL
+;array elements end
+
+
     
 P_END: ; end of the program
 .EXIT
