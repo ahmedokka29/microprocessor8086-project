@@ -5,4 +5,8 @@
  
 After that the user writes each element of the array in a loop, 0<arr[i]<128. 
 
-If the user tries to enter a non-number character, or a number outside the specified range, in either the array size or in an entry, the program will terminate with an error message.
+If the user tries to enter a non-number character, or a number outside the specified range, in either the array size or in an entry, the program will terminate with an error message. 
+
+For the searching technique to work, the array needs to be sorted, with the order of elements going from smallest to largest. 
+
+
