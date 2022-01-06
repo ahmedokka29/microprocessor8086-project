@@ -268,7 +268,7 @@ NEWLINE PROC ; printing the newline
   mov dx,13 
   mov ah,2
   int 21h  
-  mov dx,10 ;asci code for brake line 10 ,13
+  mov dx,10 ;asci code for brake LINE 13 10 '\n'
   mov ah,2
   int 21h  
   pop dx
