@@ -203,3 +203,77 @@ ENTER ENDP
 P_END: ; end of the program
 .EXIT
 END
+
+PRINT PROC          
+     
+    ;initialize count
+    PUSH AX
+    PUSH BX
+    PUSH CX
+    PUSH DX
+    MOV CX,0
+    MOV DX,0
+    label1:
+        ; if ax is zero
+        CMP AX,0
+        JE print1     
+         
+        ;initialize bx to 10
+        MOV BX,10       
+         
+        ; extract the last digit
+        DIV BX                 
+         
+        ;push it in the stack
+        PUSH DX             
+         
+        ;increment the count
+        INC CX             
+         
+        ;set dx to 0
+        XOR DX,DX
+        JMP label1
+    print1:
+        ;check if count
+        ;is greater than zero
+        CMP CX,0
+        JE exit
+         
+        ;pop the top of stack
+        POP DX
+         
+        ;add 48 so that it
+        ;represents the ASCII
+        ;value of digits
+        ADD DX,48
+         
+        ;interrupt to print a
+        ;character
+        MOV AH,02h
+        INT 21h
+         
+        ;decrease the count
+        DEC CX
+        JMP print1
+exit:
+    POP DX
+    POP CX
+    POP BX
+    POP AX
+RET
+PRINT ENDP
+    
+
+NEWLINE PROC ; printing the newline
+  PUSH AX 
+  PUSH DX
+  MOV DX,13 
+  MOV AH,2
+  INT 21h  
+  MOV DX,10 ;asci code for brake line 13 ,10
+  MOV AH,2
+  INT 21h  
+  POP DX
+  POP AX   
+RET 
+NEWLINE ENDP
