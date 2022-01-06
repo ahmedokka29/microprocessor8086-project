@@ -27,7 +27,8 @@ MOV AX,@DATA ;intialize the data segement
 MOV DS,AX
 STR:
 MOV number,0
-LEA DX,MSG3 ; display welcome messege
+; display welcome messege
+LEA DX,MSG3 ;load the effective address of msg3 to dx
 MOV AH,09H
 INT 21H ;fetch the instruction in 21h addrees
 
@@ -50,17 +51,17 @@ LEA DX,MSG4
 MOV AH,09H
 INT 21H ;fetch the instruction in 21h addrees
 
-MOV AL,CL
+MOV AL,CL ;mov cl to al 
 INC AL ;increment AL by 1
-MOV AH,0
-CALL PRINT
-LEA DX,MSG5
+MOV AH,0 ; ah=0
+CALL PRINT ;call the print proc
+LEA DX,MSG5 ; 
 MOV AH,09H
 INT 21H
 
 
-CALL ENTER 
-CALL NEWLINE
+CALL ENTER ;call it to enter the elements of the arr
+CALL NEWLINE ;call the new line proc
 CMP AL,INDEX
 JL NOTSORTED
 MOV INDEX,AL
