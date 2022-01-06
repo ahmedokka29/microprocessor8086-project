@@ -83,27 +83,28 @@ ARR_END:
 LEA DX,MSG8                                                ; load effective address to the dx
 MOV AH,09H
 INT 21H                                                    ; fetch the instruction in 21h
-CALL ENTER 
+CALL ENTER                                                 ;call it to enter the elements of the arr
 CALL NEWLINE                                               ;print brake line
-MOV KEY,AL                                                 ;put the key that eners in al to key
+MOV KEY,AL                                                 ;put the key that enters in al to key
 ;array elements end
          
  
-MOV BL,SIZE                                                 ;mov the size of the array to bl
-DEC BL    
+MOV BL,SIZE                                                 ;mov the size of the array to BL
+DEC BL                                                      ; decrement the BL by 1
 
-MOV BH,00
-MOV CL,KEY
+MOV BH,00                                                   
+MOV CL,KEY                                                 ; put the key at CL
         
-AGAIN:CMP BH,BL             ;binary search
-JA FAIL
+AGAIN:
+CMP BH,BL             ;binary search
+JA FAIL               ; jump to fail
 MOV AL,BH
 ADD AL,BL
 SHR AL,1
 MOV AH,00
 MOV SI,AX
 
-CMP CL,ARR[SI]
+CMP CL,ARR[SI]       ;compare the SIth element with CL
 
 JAE BIG
 DEC AL
@@ -119,20 +120,20 @@ SUCCESS:
 MOV SOLVE,AL
 LEA DX,MSG1
 MOV AH,09H
-INT 21H
+INT 21H                     ; fetch the instruction in 21h
 MOV AL,SOLVE 
-INC AL
+INC AL                      ; increment the AL by 1
 MOV AH,0 
-CALL PRINT
+CALL PRINT                  
 
-JMP P_END
+JMP P_END                 ; jump to the end of the program
 
 FAIL:
-LEA DX,MSG2 ;key not found
+LEA DX,MSG2                  ;key not found
 MOV AH,09H
-INT 21H
+INT 21H                      
 
-JMP P_END
+JMP P_END                 ; jump to the end of the program
 
 
     ENTER PROC NEAR                     ;procedure for entering a number
@@ -183,11 +184,11 @@ JMP P_END
 
 
 overflow:
-    LEA DX, msg6
+    LEA DX, msg6        ; load effective address to the dx
     MOV AH,09H  
        
     INT 21h
-    JMP P_END
+    JMP P_END          ; jump to the end of the program
     
 invalidcharacter:
     MOV AH,09h  
@@ -258,7 +259,7 @@ PRINT PROC                  ; procedure to print a number
         ;decrease the count
         DEC CX
         JMP print1
-exit:
+exit:        ; free the stack
     POP DX
     POP CX
     POP BX
