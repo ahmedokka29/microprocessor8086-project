@@ -1,11 +1,11 @@
 .MODEL SMALL
 .STACK
 .DATA
-ARR DB 255 DUP(?);00H,01H,02H,03H,04H,05H,06H,07H,08H,09H,010H,012H,012H,012H,012H,012H,012H,013H,014H,015H
+ARR DB 255 DUP(?);define array with maximmum size 255 
 number DB 0
 SOLVE DB 0
 numberplace db 10
-KEY EQU 0DH
+KEY EQU 0DH;the input key
 ;Messages defenitions
 MSG1 DB "KEY IS FOUND AT POSITION $" 
 MSG2 DB "KEY NOT FOUND!!! $"
@@ -14,6 +14,7 @@ MSG4 DB "ENTER ELEMENT NUMBER  $"
 MSG5 DB "____ $"
 MSG6 DB "OVERFLOW $"  
 MSG7 DB "NOTSORTED ENTER AGAIN $"
+MSG8 DB "Enter Key $"
 INDEX DB 0
 SIZE DB 0   
 messageinvalidcharacter db "Invalid Character$"
@@ -77,9 +78,14 @@ JMP ARR_LOOP
     INT 21H
     JMP ARR_LOOP
 ARR_END:
+LEA DX,MSG8
+MOV AH,09H
+INT 21H
+CALL ENTER
+MOV SOLVE,AL
 ;array elements end
-                 
-
+         
+ 
 MOV BL,SIZE
 DEC BL    
 
