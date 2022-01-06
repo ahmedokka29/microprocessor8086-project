@@ -36,8 +36,6 @@ MOV SIZE,AL
 
 MOV CL,0 
 
-
-
 ;array elements begin
 ARR_LOOP: 
 
@@ -69,7 +67,6 @@ MOV SI,CX
 MOV ARR[SI],AL
 INC CL
 JMP ARR_LOOP
-    
     
     NOTSORTED:
     LEA DX,MSG7
