@@ -22,15 +22,15 @@ messageinputnumber db "Please Input a number $"
 
 .CODE
 .STARTUP    
-MOV AX,@DATA
+MOV AX,@DATA ;intialize the data segement
 MOV DS,AX
 STR:
 MOV number,0
-LEA DX,MSG3
+LEA DX,MSG3 ; display welcome messege
 MOV AH,09H
-INT 21H
+INT 21H ;fetch the instruction in 21h addrees
 
-CALL ENTER
+CALL ENTER ; call function to inter the size
 MOV SIZE,AL
 
 
@@ -256,13 +256,13 @@ ret
 PRINT ENDP
     
 
-NEWLINE PROC
-  push ax
+NEWLINE PROC ; printing the newline
+  push ax 
   push dx
-  mov dx,13
+  mov dx,13 
   mov ah,2
   int 21h  
-  mov dx,10
+  mov dx,10 ;asci code for brake line 10 ,13
   mov ah,2
   int 21h  
   pop dx
@@ -271,6 +271,6 @@ ret
 NEWLINE ENDP
         
     
-P_END:
+P_END: ; end of the program
 .EXIT
 END
