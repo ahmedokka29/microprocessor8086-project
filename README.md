@@ -1,11 +1,11 @@
 # microprocessor8086-project
 ## Binary Search
 
-In this program, the user creates an array and can search for an element in it. The user first starts by entering the size of the array n, and 0<n<128. 
+In this program, the user creates an array and can search for an element in it. The user first starts by entering the size of the array n, and 0<n<127. 
  
-After that the user writes each element of the array in a loop, 0<=arr[i]<128. 
+After that the user writes each element of the array in a loop, 0<=arr[i]<127. 
 
-After filling the array, the user is supposed to enter the key to search for, which also has to be in the range 0<s<128.
+After filling the array, the user is supposed to enter the key to search for, which also has to be in the range 0<s<127.
 
 If the user tries to enter a non-number character, in either the array size, entry or the search key, the program will give an invalid charachter message ans ask the user to 
 re-enter the number. 
