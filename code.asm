@@ -20,7 +20,6 @@ SIZE DB 0
 messageinvalidcharacter db "Invalid Character$"
 messageinputnumber db "Please Input a number $"
 
-
 .CODE
 .STARTUP    
 MOV AX,@DATA ;intialize the data segement
