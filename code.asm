@@ -200,10 +200,6 @@ numbercomplete:
     RET
 ENTER ENDP
     
-P_END: ; end of the program
-.EXIT
-END
-
 PRINT PROC          
      
     ;initialize count
@@ -277,3 +273,7 @@ NEWLINE PROC ; printing the newline
   POP AX   
 RET 
 NEWLINE ENDP
+
+P_END: ; end of the program
+.EXIT
+END
