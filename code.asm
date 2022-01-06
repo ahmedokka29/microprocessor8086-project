@@ -31,7 +31,7 @@ LEA DX,MSG3 ; display welcome messege
 MOV AH,09H
 INT 21H ;fetch the instruction in 21h addrees
 
-CALL ENTER ; call function to inter the size
+CALL ENTER ; call function to enter the size
 MOV SIZE,AL
 
 
@@ -42,16 +42,16 @@ MOV CL,0
 ;array elements begin
 ARR_LOOP: 
 
-CMP CL,SIZE
+CMP CL,SIZE ; compare the size with CL
 JE ARR_END 
 
 
 LEA DX,MSG4
 MOV AH,09H
-INT 21H
+INT 21H ;fetch the instruction in 21h addrees
 
 MOV AL,CL
-INC AL
+INC AL ;increment AL by 1
 MOV AH,0
 CALL PRINT
 LEA DX,MSG5
@@ -126,11 +126,11 @@ CALL PRINT
 
 JMP P_END
 
-FAIL:LEA DX,MSG2
+FAIL:
+LEA DX,MSG2 ;key not found
 MOV AH,09H
 INT 21H
 
-  
 JMP P_END
 
 
