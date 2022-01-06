@@ -95,7 +95,7 @@ DEC BL
 MOV BH,00
 MOV CL,KEY
         
-AGAIN:CMP BH,BL
+AGAIN:CMP BH,BL             ;binary search
 JA FAIL
 MOV AL,BH
 ADD AL,BL
@@ -135,7 +135,7 @@ INT 21H
 JMP P_END
 
 
-    ENTER PROC NEAR
+    ENTER PROC NEAR                     ;procedure for entering a number
         PUSH AX
         PUSH BX
         PUSH DX
@@ -207,7 +207,7 @@ numbercomplete:
 ENTER ENDP     
     
     
-PRINT PROC          
+PRINT PROC                  ; procedure to print a number
      
     ;initialize count
     PUSH AX
