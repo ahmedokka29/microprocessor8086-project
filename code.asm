@@ -183,8 +183,7 @@ JMP P_END                 ; jump to the end of the program
 
 overflow:
     LEA DX, msg6        ; load effective address to the dx
-    MOV AH,09H          ; print the message 
-       
+    MOV AH,09H          ; print the message    
     INT 21h
     JMP P_END          ; jump to the end of the program
     
@@ -196,14 +195,16 @@ invalidcharacter:
     JMP loop_number_main           
         
 numbercomplete:
- 
+    CMP CX,0
+    JE loop_number_main
+    POP CX
     POP DX
     POP BX
     POP AX
     mov al,number 
     
     RET
-ENTER ENDP     
+ENTER ENDP       
     
     
 PRINT PROC                  ; procedure to print a number
