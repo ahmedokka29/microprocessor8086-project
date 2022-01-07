@@ -140,16 +140,18 @@ JMP P_END                 ; jump to the end of the program
         PUSH AX
         PUSH BX
         PUSH DX
+        PUSH CX 
+        MOV CX,0
         loop_number_main:
+        CALL NEWLINE
         
         MOV number,0    
     loop_read_number:
     
-        MOV AH,01H  
-                    
+        MOV AH,01H             
         INT 21H    
         
-        CMP AL,0DH            ;compare AL with ASCI code of ENTER 
+        CMP AL,0DH            ;compare AL with ASCII code of ENTER 
         JE numbercomplete   
         
         CMP AL,30H            ;compare AL with ASCII code of zero            
