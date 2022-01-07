@@ -1,20 +1,23 @@
 .MODEL SMALL
 .STACK
 .DATA
-ARR DB 127 DUP(?)                                          ;define array with maximmum size 127 
+ARR DB 127 DUP(?);define array with maximmum size 127 
+OCUR DB 128 DUP(?)
 number DB 0
 SOLVE DB 0
 numberplace db 10
-KEY DB 0DH                                                 ;the input key
-;Messages defenitions
+KEY DB 0DH;the input key
+;Messages defenitions                
+WEL DB "WELCOME TO BINARY SEARCH PROGRAM",13,10,"$"
 MSG1 DB "KEY IS FOUND AT POSITION $" 
 MSG2 DB "KEY NOT FOUND!!! $"
 MSG3 DB "ENTER SIZE: $"   
 MSG4 DB "ENTER ELEMENT NUMBER  $"
 MSG5 DB "____ $"
-MSG6 DB "OVERFLOW $"  
+MSG6 DB "OVERFLOW ENTER AGAIN","$" 
 MSG7 DB "NOTSORTED ENTER AGAIN $"
-MSG8 DB "Enter Key $"
+MSG8 DB "Enter Key $"      
+MSG9 DB "ZERO SIZE ENTER AGAIN",13,10,"$"
 INDEX DB 0
 SIZE DB 0   
 messageinvalidcharacter db "Invalid Character$"
@@ -23,16 +26,30 @@ messageinputnumber db "Please Input a number $"
 
 .CODE
 .STARTUP    
-MOV AX,@DATA                                                ;intialize the data segement
+MOV AX,@DATA ;intialize the data segement
 MOV DS,AX
 STR:
-MOV number,0
-; display welcome messege
-LEA DX,MSG3                                                 ;load the effective address of msg3 to dx
-MOV AH,09H
-INT 21H                                                     ;fetch the instruction in 21h addrees
+MOV number,0    
 
-CALL ENTER                                                  ; call function to enter the size
+
+LEA DX,WEL ; display welcome messege
+MOV AH,09H
+INT 21H ;fetch the instruction in 21h addrees
+JMP BEGIN
+RE:
+LEA DX,MSG9 ; display welcome messege
+MOV AH,09H
+INT 21H ;fetch the instruction in 21h addrees
+BEGIN:
+LEA DX,MSG3 ; display welcome messege
+MOV AH,09H
+INT 21H ;fetch the instruction in 21h addrees
+                                              
+                                              
+CALL ENTER ; call function to inter the size
+CMP AL,0
+JE  RE
+CALL NEWLINE
 MOV SIZE,AL
 
 
@@ -43,75 +60,74 @@ MOV CL,0
 ;array elements begin
 ARR_LOOP: 
 
-CMP CL,SIZE                                                ; compare the size with CL
+CMP CL,SIZE
 JE ARR_END 
 
 
 LEA DX,MSG4
 MOV AH,09H
-INT 21H                                                    ;fetch the instruction in 21h addrees
+INT 21H
 
-MOV AL,CL                                                  ;mov cl to al 
-INC AL                                                     ;increment AL by 1
-MOV AH,0                                                   ; ah=0
-CALL PRINT                                                 ;call the print proc
-LEA DX,MSG5                                                ; load effective address of msg5 to dx
+MOV AL,CL
+INC AL
+MOV AH,0
+CALL PRINT
+LEA DX,MSG5
 MOV AH,09H
 INT 21H
 
 
-CALL ENTER                                                 ;call it to enter the elements of the arr
-CALL NEWLINE                                               ;call the new line proc
-CMP AL,INDEX                                               ;compare the new intered element with the previos one
-JL NOTSORTED                                               ; if the new element is less than the old it prints nonsorted and make u enter it again
-MOV INDEX,AL                                               ;after entering the new element it keeps its vvalue INDEX
+CALL ENTER 
+CALL NEWLINE
+CMP AL,INDEX
+JL NOTSORTED
+MOV INDEX,AL
  
 MOV CH,0
-MOV SI,CX 
+MOV SI,CX
 MOV ARR[SI],AL
-INC CL                                                     ;increament the counter of the loop
+INC CL
 JMP ARR_LOOP
     
     
     NOTSORTED:
-    LEA DX,MSG7                                            ; load effective address to the dx
+    LEA DX,MSG7
     MOV AH,09H
-    INT 21H                                                ; fetch the instruction in 21h
-    CALL NEWLINE                                           ;print brake line
-    JMP ARR_LOOP                                           ;contiue the loop
+    INT 21H
+    CALL NEWLINE
+    JMP ARR_LOOP
 ARR_END:
-LEA DX,MSG8                                                ; load effective address to the dx
+LEA DX,MSG8
 MOV AH,09H
-INT 21H                                                    ; fetch the instruction in 21h
-CALL ENTER                                                 ;call it to enter the elements of the arr
-CALL NEWLINE                                               ;print brake line
-MOV KEY,AL                                                 ;put the key that enters in al to key
+INT 21H
+CALL ENTER 
+CALL NEWLINE
+MOV KEY,AL
 ;array elements end
          
  
-MOV BL,SIZE                                                 ;mov the size of the array to BL
-DEC BL                                                      ; decrement the BL by 1
+MOV BL,SIZE
+DEC BL    
 
-MOV BH,00                                                   
-MOV CL,KEY                                                 ; put the key at CL
+MOV BH,00
+MOV CL,KEY
         
-AGAIN:
-CMP BH,BL             ;binary search
-JA FAIL               ; jump to fail
+AGAIN:CMP BH,BL
+JA FAIL
 MOV AL,BH
 ADD AL,BL
 SHR AL,1
 MOV AH,00
 MOV SI,AX
 
-CMP CL,ARR[SI]       ;compare the SIth element with CL
+CMP CL,ARR[SI]
 
 JAE BIG
 DEC AL
 MOV BL,AL
 JMP AGAIN
 
-BIG:JE SUCCESS         ;found the element increase it by 1 for the 1 indexing
+BIG:JE SUCCESS
 INC AL
 MOV BH,AL
 JMP AGAIN
@@ -120,72 +136,80 @@ SUCCESS:
 MOV SOLVE,AL
 LEA DX,MSG1
 MOV AH,09H
-INT 21H                     ; fetch the instruction in 21h
+INT 21H
 MOV AL,SOLVE 
-INC AL                      ; increment the AL by 1
+INC AL
 MOV AH,0 
-CALL PRINT                  
+CALL PRINT
 
-JMP P_END                 ; jump to the end of the program
+JMP P_END
 
-FAIL:
-LEA DX,MSG2                  ;key not found
+FAIL:LEA DX,MSG2
 MOV AH,09H
-INT 21H                      
+INT 21H
 
-JMP P_END                 ; jump to the end of the program
+  
+JMP P_END
 
 
-    ENTER PROC NEAR                     ;procedure for entering a number
+    ENTER PROC NEAR
         PUSH AX
         PUSH BX
         PUSH DX
         PUSH CX 
-        MOV CX,0             ;counter cx to check that a number has been entered before the enter button
+        MOV CX,0
         loop_number_main:
         CALL NEWLINE
         
         MOV number,0    
     loop_read_number:
-        MOV AH,01H             
+    
+        MOV AH,01H  
+                    
         INT 21H    
         
-        CMP AL,0DH            ;compare AL with ASCII code of ENTER 
-        JE numbercomplete   
+        CMP AL,0DH 
+        JE numbercomplete
         
-        CMP AL,30H            ;compare AL with ASCII code of zero            
+        INC CX   
+        
+        CMP AL,30H  
+                    
         JL invalidcharacter 
      
-        CMP AL,39h           ;compare AL with ASCII code of 9
+        CMP AL,39h  
         JG invalidcharacter 
         
         
-        SUB AL,30h           ;subtract ASCII code of zero from AL
+        SUB AL,30h  
                                 
         MOV BL,AL   
         
-        MOV AL,number     
-        MUL numberplace  ; multiply al by 10;
+        MOV AL,number  
+        MUL numberplace  
              
         MOV BH,0       
         MOV AH,0
         ADD AX,BX
-        CMP AH,0        ;if(number takes two bytes)
+        CMP AH,0
         JNE overflow
  
           
 
         MOV number,AL
         CMP number,0
-        JL overflow      ; if number is negative 
+        JL overflow
+        
+       
         JMP loop_read_number
 
 
 overflow:
-    LEA DX, msg6        ; load effective address to the dx
-    MOV AH,09H          ; print the message    
+    LEA DX, msg6
+    MOV AH,09H  
+       
     INT 21h
-    JMP P_END          ; jump to the end of the program
+    JMP loop_number_main
     
 invalidcharacter:
     MOV AH,09h  
@@ -199,15 +223,15 @@ numbercomplete:
     JE loop_number_main
     POP CX
     POP DX
-    POP BX               
+    POP BX
     POP AX
-    mov al,number ; saving input to al
+    mov al,number 
     
     RET
-ENTER ENDP       
+ENTER ENDP     
     
     
-PRINT PROC                  ; procedure to print a number
+PRINT PROC          
      
     ;initialize count
     PUSH AX
@@ -225,7 +249,7 @@ PRINT PROC                  ; procedure to print a number
         MOV BX,10       
          
         ; extract the last digit
-        DIV BX       ;put the result at AX and the remendier to DX           
+        DIV BX                 
          
         ;push it in the stack
         PUSH DX             
@@ -237,26 +261,28 @@ PRINT PROC                  ; procedure to print a number
         XOR DX,DX
         JMP label1
     print1:
-        ;check if count is greater than zero
+        ;check if count
+        ;is greater than zero
         CMP CX,0
         JE exit
          
         ;pop the top of stack
         POP DX
          
-        ;add 30h so that it
+        ;add 48 so that it
         ;represents the ASCII
         ;value of digits
         ADD DX,30h
          
-        ;interrupt to print a character
+        ;interrupt to print a
+        ;character
         MOV AH,02h
         INT 21h
          
         ;decrease the count
         DEC CX
         JMP print1
-exit:        ; free the stack
+exit:
     POP DX
     POP CX
     POP BX
@@ -265,13 +291,13 @@ RET
 PRINT ENDP
     
 
-NEWLINE PROC          ; printing the newline
+NEWLINE PROC ; printing the newline
   PUSH AX 
   PUSH DX
   MOV DX,13 
   MOV AH,2
   INT 21h  
-  MOV DX,10          ;asci code for brake line 13 ,10
+  MOV DX,10 ;asci code for brake line 13 ,10
   MOV AH,2
   INT 21h  
   POP DX
@@ -280,6 +306,6 @@ RET
 NEWLINE ENDP
         
     
-P_END:              ; end of the program
+P_END: ; end of the program
 .EXIT
 END
