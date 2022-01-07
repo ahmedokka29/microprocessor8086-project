@@ -2,7 +2,7 @@
 .STACK
 .DATA
 ARR DB 127 DUP(?);define array with maximmum size 127 
-OCUR DB 128 DUP(?)
+OCUR DB 128 DUP(0)
 number DB 0
 SOLVE DB 0
 numberplace db 10
@@ -18,8 +18,10 @@ MSG6 DB "OVERFLOW ENTER AGAIN","$"
 MSG7 DB "NOTSORTED ENTER AGAIN $"
 MSG8 DB "Enter Key $"      
 MSG9 DB "ZERO SIZE ENTER AGAIN",13,10,"$"
+MSG10 DB "NUMBER OF OCURRENCES IS ","$"
 INDEX DB 0
-SIZE DB 0   
+SIZE DB 0
+OCC DB 0   
 messageinvalidcharacter db "Invalid Character$"
 messageinputnumber db "Please Input a number $"
 
@@ -86,7 +88,10 @@ MOV INDEX,AL
 MOV CH,0
 MOV SI,CX
 MOV ARR[SI],AL
-INC CL
+INC CL   
+MOV AH,0    
+MOV SI,AX
+INC OCUR[SI]
 JMP ARR_LOOP
     
     
@@ -111,7 +116,10 @@ DEC BL
 
 MOV BH,00
 MOV CL,KEY
-        
+MOV CH,0
+MOV SI,CX
+MOV AL,OCUR[SI] 
+MOV OCC,AL
 AGAIN:CMP BH,BL
 JA FAIL
 MOV AL,BH
@@ -141,6 +149,14 @@ MOV AL,SOLVE
 INC AL
 MOV AH,0 
 CALL PRINT
+CALL NEWLINE
+LEA DX,MSG10
+MOV AH,09H
+INT 21H 
+MOV AL,OCC  
+MOV AH,0 
+CALL PRINT
+ 
 
 JMP P_END
 
