@@ -111,7 +111,7 @@ DEC AL
 MOV BL,AL
 JMP AGAIN
 
-BIG:JE SUCCESS
+BIG:JE SUCCESS         ;found the element increase it by 1 for the 1 indexing
 INC AL
 MOV BH,AL
 JMP AGAIN
@@ -141,7 +141,7 @@ JMP P_END                 ; jump to the end of the program
         PUSH BX
         PUSH DX
         PUSH CX 
-        MOV CX,0
+        MOV CX,0             ;counter cx to check that a number has been entered before the enter button
         loop_number_main:
         CALL NEWLINE
         
@@ -164,20 +164,20 @@ JMP P_END                 ; jump to the end of the program
                                 
         MOV BL,AL   
         
-        MOV AL,number  
-        MUL numberplace  
+        MOV AL,number     
+        MUL numberplace  ; multiply al by 10;
              
         MOV BH,0       
         MOV AH,0
         ADD AX,BX
-        CMP AH,0
+        CMP AH,0        ;if(number takes two bytes)
         JNE overflow
  
           
 
         MOV number,AL
         CMP number,0
-        JL overflow
+        JL overflow      ; if number is negative 
         JMP loop_read_number
 
 
@@ -199,9 +199,9 @@ numbercomplete:
     JE loop_number_main
     POP CX
     POP DX
-    POP BX
+    POP BX               
     POP AX
-    mov al,number 
+    mov al,number ; saving input to al
     
     RET
 ENTER ENDP       
