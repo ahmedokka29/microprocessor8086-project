@@ -147,7 +147,6 @@ JMP P_END                 ; jump to the end of the program
         
         MOV number,0    
     loop_read_number:
-    
         MOV AH,01H             
         INT 21H    
         
@@ -179,8 +178,6 @@ JMP P_END                 ; jump to the end of the program
         MOV number,AL
         CMP number,0
         JL overflow
-        
-       
         JMP loop_read_number
 
 
