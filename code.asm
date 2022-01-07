@@ -149,18 +149,17 @@ JMP P_END                 ; jump to the end of the program
                     
         INT 21H    
         
-        CMP AL,0DH 
+        CMP AL,0DH            ;compare AL with ASCI code of ENTER 
         JE numbercomplete   
         
-        CMP AL,30H  
-                    
+        CMP AL,30H            ;compare AL with ASCII code of zero            
         JL invalidcharacter 
      
-        CMP AL,39h  
+        CMP AL,39h           ;compare AL with ASCII code of 9
         JG invalidcharacter 
         
         
-        SUB AL,30h  
+        SUB AL,30h           ;subtract ASCII code of zero from AL
                                 
         MOV BL,AL   
         
@@ -185,7 +184,7 @@ JMP P_END                 ; jump to the end of the program
 
 overflow:
     LEA DX, msg6        ; load effective address to the dx
-    MOV AH,09H  
+    MOV AH,09H          ; print the message 
        
     INT 21h
     JMP P_END          ; jump to the end of the program
@@ -226,7 +225,7 @@ PRINT PROC                  ; procedure to print a number
         MOV BX,10       
          
         ; extract the last digit
-        DIV BX                 
+        DIV BX       ;put the result at AX and the remendier to DX           
          
         ;push it in the stack
         PUSH DX             
@@ -246,10 +245,10 @@ PRINT PROC                  ; procedure to print a number
         ;pop the top of stack
         POP DX
          
-        ;add 48 so that it
+        ;add 30h so that it
         ;represents the ASCII
         ;value of digits
-        ADD DX,48
+        ADD DX,30h
          
         ;interrupt to print a
         ;character
