@@ -237,8 +237,7 @@ PRINT PROC                  ; procedure to print a number
         XOR DX,DX
         JMP label1
     print1:
-        ;check if count
-        ;is greater than zero
+        ;check if count is greater than zero
         CMP CX,0
         JE exit
          
@@ -250,8 +249,7 @@ PRINT PROC                  ; procedure to print a number
         ;value of digits
         ADD DX,30h
          
-        ;interrupt to print a
-        ;character
+        ;interrupt to print a character
         MOV AH,02h
         INT 21h
          
@@ -267,13 +265,13 @@ RET
 PRINT ENDP
     
 
-NEWLINE PROC ; printing the newline
+NEWLINE PROC          ; printing the newline
   PUSH AX 
   PUSH DX
   MOV DX,13 
   MOV AH,2
   INT 21h  
-  MOV DX,10 ;asci code for brake line 13 ,10
+  MOV DX,10          ;asci code for brake line 13 ,10
   MOV AH,2
   INT 21h  
   POP DX
@@ -282,6 +280,6 @@ RET
 NEWLINE ENDP
         
     
-P_END: ; end of the program
+P_END:              ; end of the program
 .EXIT
 END
