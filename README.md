@@ -21,13 +21,12 @@ After the array is completely filled and the search key entered, the program wil
 
 ## Illustrative video on How the program work
 
-Uploading 2022-01-06 21-31-42-1.mp4…
+https://user-images.githubusercontent.com/56696104/148626840-12b18a4a-8ed9-47f5-a4fb-44f330557eec.mp4
 
 <br/>
 Better Technique 
 
 
-Uploading 2022-01-08 02-54-39-1.mp4…
 
 
 
