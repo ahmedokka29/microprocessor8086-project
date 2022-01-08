@@ -102,33 +102,33 @@ JMP ARR_LOOP
     JMP ARR_LOOP    ;continue the loop
 
 ARR_END:
-LEA DX,MSG8
+LEA DX,MSG8      ;load effective address to the dx
 MOV AH,09H
-INT 21H
-CALL ENTER 
-CALL NEWLINE
-MOV KEY,AL
+INT 21H          ;fetch the instruction in 21h
+CALL ENTER       ;call it to enter the elements of the arr
+CALL NEWLINE     ;print brake line
+MOV KEY,AL       ;put the key that enters in al to key
 ;array elements end
          
  
-MOV BL,SIZE
-DEC BL    
+MOV BL,SIZE     ;mov the size of the array to BL
+DEC BL           ; decrement the BL by 1
 
 MOV BH,00
-MOV CL,KEY
+MOV CL,KEY      ;put the key at CL
 MOV CH,0
 MOV SI,CX
 MOV AL,OCUR[SI] 
 MOV OCC,AL
-AGAIN:CMP BH,BL
-JA FAIL
+AGAIN:CMP BH,BL ;binary search
+JA FAIL         ;jump to fail
 MOV AL,BH
 ADD AL,BL
 SHR AL,1
 MOV AH,00
 MOV SI,AX
 
-CMP CL,ARR[SI]
+CMP CL,ARR[SI]  ;compare the SIth element with CL
 
 JAE BIG
 DEC AL
@@ -144,9 +144,9 @@ SUCCESS:
 MOV SOLVE,AL
 LEA DX,MSG1
 MOV AH,09H
-INT 21H
+INT 21H          ;fetch the instruction in 21h
 MOV AL,SOLVE 
-INC AL
+INC AL           ;increment the AL by 1
 MOV AH,0 
 CALL PRINT
 CALL NEWLINE
@@ -158,9 +158,9 @@ MOV AH,0
 CALL PRINT
  
 
-JMP P_END
+JMP P_END        ;jump to the end of the program
 
-FAIL:LEA DX,MSG2
+FAIL:LEA DX,MSG2     ;key not found
 MOV AH,09H
 INT 21H
 
@@ -184,20 +184,20 @@ JMP P_END
                     
         INT 21H    
         
-        CMP AL,0DH 
+        CMP AL,0DH      ;compare AL with ASCII code of ENTER
         JE numbercomplete
         
         INC CX   
         
-        CMP AL,30H  
+        CMP AL,30H      ;compare AL with ASCII code of zero 
                     
         JL invalidcharacter 
      
-        CMP AL,39h  
+        CMP AL,39h      ;compare AL with ASCII code of 9
         JG invalidcharacter 
         
         
-        SUB AL,30h  
+        SUB AL,30h       ;subtract ASCII code of zero from AL
                                 
         MOV BL,AL   
         
@@ -221,8 +221,8 @@ JMP P_END
 
 
 overflow:
-    LEA DX, msg6
-    MOV AH,09H  
+    LEA DX, msg6     ;load effective address to the dx
+    MOV AH,09H       ;print the message
        
     INT 21h
     JMP loop_number_main
@@ -247,7 +247,7 @@ numbercomplete:
 ENTER ENDP     
     
     
-PRINT PROC          
+PRINT PROC     ;procedure to print a number     
      
     ;initialize count
     PUSH AX
@@ -265,7 +265,7 @@ PRINT PROC
         MOV BX,10       
          
         ; extract the last digit
-        DIV BX                 
+        DIV BX       ;put the result at AX and the remendier to DX                 
          
         ;push it in the stack
         PUSH DX             
@@ -285,7 +285,7 @@ PRINT PROC
         ;pop the top of stack
         POP DX
          
-        ;add 48 so that it
+        ;add 48 = 30h so that it
         ;represents the ASCII
         ;value of digits
         ADD DX,30h
@@ -298,7 +298,7 @@ PRINT PROC
         ;decrease the count
         DEC CX
         JMP print1
-exit:
+exit:       ;free the stack
     POP DX
     POP CX
     POP BX
