@@ -1,4 +1,5 @@
 # microprocessor8086-project
+<br/>
 ## Binary Search
 
 In this program, the user creates an array and can search for an element in it. The user first starts by entering the size of the array n, and 0<n<127. 
@@ -16,7 +17,9 @@ For the searching technique to work, the array needs to be sorted, with the orde
 
 After the array is completely filled and the search key entered, the program will search through the array using the binary search technique. Which compares the element you are searching for with the middle element of your array, if it's larger then it searches in the right half of the array (the larger numbers), and if lower does so in the left half (the smaller numbers), then the same code is run until either it finds the element, in which case it returns the value of its index, and prints that the key was found and the its index. Or it reaches a point in which the array can no longer be divided, so the program prints that the key wasn't found.
 
+<br/>
 ## Support 
+<br/>
 Thanks to :
 
 1- Prof. Abdelhamid Attaby
