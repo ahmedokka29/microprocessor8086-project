@@ -19,7 +19,6 @@ After the array is completely filled and the search key entered, the program wil
 
 
 ## Support 
-<br/>
 Thanks to :
 
 1. Prof. Abdelhamid Attaby
