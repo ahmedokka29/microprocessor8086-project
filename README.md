@@ -22,7 +22,7 @@ After the array is completely filled and the search key entered, the program wil
 <br/>
 Thanks to :
 
-1- Prof. Abdelhamid Attaby
-2- Eng. Ahmed Bakr
+1. Prof. Abdelhamid Attaby
+2. Eng. Ahmed Bakr
 
 for helping to understand assamply language , and implement Binary Search using it.
