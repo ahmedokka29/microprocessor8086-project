@@ -70,20 +70,20 @@ LEA DX,MSG4
 MOV AH,09H
 INT 21H
 
-MOV AL,CL
-INC AL
-MOV AH,0
-CALL PRINT
-LEA DX,MSG5
+MOV AL,CL   ;mov cl to al
+INC AL      ;increment AL by 1
+MOV AH,0    ;set AH = 0
+CALL PRINT  ;call the print proc
+LEA DX,MSG5 ;load effective address of msg5 to DX
 MOV AH,09H
 INT 21H
 
 
-CALL ENTER 
-CALL NEWLINE
-CMP AL,INDEX
-JL NOTSORTED
-MOV INDEX,AL
+CALL ENTER      ;call it to enter the elements of the arr
+CALL NEWLINE    ;call the new line proc
+CMP AL,INDEX    ;compare the new intered element with the previos one
+JL NOTSORTED    ;if the new element is less than the old it prints nonsorted and make u enter it again
+MOV INDEX,AL    ;after entering the new element it keeps its vvalue INDEX
  
 MOV CH,0
 MOV SI,CX
@@ -94,13 +94,13 @@ MOV SI,AX
 INC OCUR[SI]
 JMP ARR_LOOP
     
-    
     NOTSORTED:
-    LEA DX,MSG7
+    LEA DX,MSG7 ;load effective address to the dx
     MOV AH,09H
-    INT 21H
-    CALL NEWLINE
-    JMP ARR_LOOP
+    INT 21H         ;fetch the instruction in 21h
+    CALL NEWLINE    ;print brake line
+    JMP ARR_LOOP    ;continue the loop
+
 ARR_END:
 LEA DX,MSG8
 MOV AH,09H
